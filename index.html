@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vaat Sepeti</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-treeview.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap-treeview.js"></script>
+    <style>
+        .col-centered {
+            float: none;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1><a href="index.html" style="text-decoration: none; ">Vaat Sepeti</a></h1>
+    <br>
+    <div class="row">
+        <hr>
+        <div class="col-md-6 col-centered">
+            <div class="form-group">
+                <input type="input" class="form-control" id="input-search" placeholder="Arama.." value="">
+            </div>
+            <div id="search-output" style="margin-left: 5%;"></div>
+            <div id="treeview-searchable" class=""></div>
+        </div>
+    </div>
+    <br/>
+</div>
+<script src="http://jonmiles.github.io/bootstrap-treeview/bower_components/jquery/dist/jquery.js"></script>
+<script src="http://jonmiles.github.io/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        var dataTree = [
+            {
+                text: 'Seçim Vaatleri',
+                href: '#',
+                nodes: [
+                    {
+                        text: 'Ekonomik Vaatler',
+                        href: '#',
+                        nodes: [
+                            {
+                                text: 'Asgari ücret 1300 tl olacak',
+                                href: './vaat/asgari-ucret-1300-tl-olacak.html',
+                                backColor: '#ff8080'
+                            },
+                            {
+                                text: 'Emekliye 1200 TL zam verilecek',
+                                href: '#',
+                                backColor: '#ff8080'
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Tarım Vaatleri',
+                        href: '#',
+                        nodes: [
+                            {
+                                text: 'Çiftçilere KDV desteği verilecek',
+                                href: '#',
+                                backColor: '#ff8080'
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Eğitim Vaatleri',
+                        href: '#',
+                        nodes: [
+                            {
+                                text: 'Üniversite bursu 400 TL olacak',
+                                href: '#',
+                                backColor: '#80ffaa'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        var $searchableTree = $('#treeview-searchable').treeview({
+            enableLinks: true,
+            data: dataTree,
+            levels: 2
+        });
+
+        var search = function (e) {
+            var pattern = $('#input-search').val();
+            var options = {
+                ignoreCase: true
+            };
+
+            var results = $searchableTree.treeview('search', [pattern, options]);
+            var output = '';
+
+            if (results.length > 0) {
+                $.each(results, function (index, result) {
+                    output += '<p><a href="'+result.href+'" target="_blank"> ' + result.text + ' </a></p>';
+                });
+            }
+            else {
+                if (pattern != '')
+                    output = '<p>Kayıt bulunamadı.</p>';
+                else
+                    output = '';
+            }
+            $('#search-output').html(output);
+        }
+
+        $('#input-search').on('keyup', search);
+
+    });
+</script>
+</body>
+</html>
